@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;c&quot;,&quot;python&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -211,10 +211,8 @@
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
+              <a href="#" data-language-name="c">c</a>
               <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -225,13 +223,18 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#mains" class="toc-h1 toc-link" data-title="Mains">Mains</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#list-mains" class="toc-h2 toc-link" data-title="List Mains">List Mains</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#buses" class="toc-h1 toc-link" data-title="Buses">Buses</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#list-root-level-bus" class="toc-h2 toc-link" data-title="List Root-Level Bus">List Root-Level Bus</a>
                   </li>
                   <li>
                     <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
@@ -254,76 +257,61 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the Cyperus API. </p>
 
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>This is an open-sound-control api that&#39;s used to generate musically-inclined dsp graphs in realtime.</p>
 
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
+<p>For now we only support the UC Berkeley CNMAT&#39;s open-sound-control protocol, if you&#39;re unfamiliar please see <a href="http://opensoundcontrol.org/introduction-osc">opensoundcontrol.org</a>.</p>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+Each unique object in the Cyperus API posseses a Version 4 UUID separated by a unique token for that type.
 </aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+<h1 id='mains'>Mains</h1><h2 id='list-mains'>List Mains</h2>
+<blockquote>
+<p>To get a list of Cyperus&#39; current main inputs and outputs, use this namespace:</p>
+</blockquote>
+<pre class="highlight c tab-c"><code><span class="cp">#include &lt;lo/lo.h&gt;
+</span><span class="n">lo_address</span> <span class="n">t</span> <span class="o">=</span> <span class="n">lo_address_new</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span> <span class="s">"97211"</span><span class="p">)</span>
+<span class="n">lo_send</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s">"/cyperus/list/main"</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">liblo</span>
+<span class="n">dest</span> <span class="o">=</span> <span class="n">liblo</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="mi">97211</span><span class="p">)</span>
+<span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/list/main"</span><span class="p">)</span>
 </code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>The above namespace returns a new-line separated list of inputs and outputs like:</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
+<pre class="highlight c tab-c"><code><span class="nl">in:</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">{</span><span class="mi">3</span><span class="n">ca74782</span><span class="o">-</span><span class="n">b379</span><span class="o">-</span><span class="mf">446e-8</span><span class="n">a59</span><span class="o">-</span><span class="mi">1</span><span class="n">f96323d4b89</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">{</span><span class="n">cddbb832</span><span class="o">-</span><span class="n">eea0</span><span class="o">-</span><span class="mi">4</span><span class="n">aa7</span><span class="o">-</span><span class="n">a427</span><span class="o">-</span><span class="mi">36</span><span class="n">eb6fdba529</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">{</span><span class="mi">9</span><span class="n">ef2ead1</span><span class="o">-</span><span class="n">e7ab</span><span class="o">-</span><span class="mi">4</span><span class="n">b00</span><span class="o">-</span><span class="mi">8454</span><span class="o">-</span><span class="mi">52</span><span class="n">dc1be82a15</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">{</span><span class="n">ba78868f</span><span class="o">-</span><span class="mi">47</span><span class="n">b2</span><span class="o">-</span><span class="mi">442</span><span class="n">f</span><span class="o">-</span><span class="n">b6e7</span><span class="o">-</span><span class="n">de6ed54efc0a</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">{</span><span class="n">fe0663ec</span><span class="o">-</span><span class="mi">08</span><span class="n">af</span><span class="o">-</span><span class="mi">4</span><span class="n">a01</span><span class="o">-</span><span class="mf">822e-05</span><span class="n">cf4312d775</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">{</span><span class="mo">025</span><span class="mi">8</span><span class="n">a013</span><span class="o">-</span><span class="mi">8</span><span class="n">d9e</span><span class="o">-</span><span class="mi">4655</span><span class="o">-</span><span class="mi">94</span><span class="n">ee</span><span class="o">-</span><span class="mi">0</span><span class="n">ac973350c2d</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">{</span><span class="mi">4</span><span class="n">ebcb35e</span><span class="o">-</span><span class="mi">7</span><span class="n">ae5</span><span class="o">-</span><span class="mi">4</span><span class="n">c97</span><span class="o">-</span><span class="n">bb31</span><span class="o">-</span><span class="mi">4</span><span class="n">c02a72cd53b</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">{</span><span class="n">fb1418ac</span><span class="o">-</span><span class="n">a93d</span><span class="o">-</span><span class="mi">4562</span><span class="o">-</span><span class="mi">9</span><span class="n">aae</span><span class="o">-</span><span class="mi">0</span><span class="n">b4e9d7c6f13</span>
+<span class="n">out</span><span class="o">:</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">}</span><span class="n">e5417ebc</span><span class="o">-</span><span class="mi">76</span><span class="n">a0</span><span class="o">-</span><span class="mi">4</span><span class="n">b9b</span><span class="o">-</span><span class="mi">9</span><span class="n">afa</span><span class="o">-</span><span class="n">e8decb9561a8</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">}</span><span class="mi">8</span><span class="n">b0fa997</span><span class="o">-</span><span class="mi">9143</span><span class="o">-</span><span class="mi">405</span><span class="n">a</span><span class="o">-</span><span class="mi">84</span><span class="n">f8</span><span class="o">-</span><span class="n">d55f79d47cfd</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">}</span><span class="n">ac60fe34</span><span class="o">-</span><span class="n">b3be</span><span class="o">-</span><span class="mi">4068</span><span class="o">-</span><span class="mi">92</span><span class="n">eb</span><span class="o">-</span><span class="n">b508fc1fb3da</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">}</span><span class="n">f06b4ab4</span><span class="o">-</span><span class="mi">1705</span><span class="o">-</span><span class="mi">45</span><span class="n">d0</span><span class="o">-</span><span class="n">be41</span><span class="o">-</span><span class="n">c346822b3aee</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">}</span><span class="n">f5721f2a</span><span class="o">-</span><span class="mi">0</span><span class="n">a32</span><span class="o">-</span><span class="mi">4</span><span class="n">fe7</span><span class="o">-</span><span class="mi">9500</span><span class="o">-</span><span class="n">b3afba48eaed</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">}</span><span class="n">dcf2ab1c</span><span class="o">-</span><span class="n">bd42</span><span class="o">-</span><span class="mi">4860</span><span class="o">-</span><span class="mi">89</span><span class="n">ba</span><span class="o">-</span><span class="n">a277f1da4262</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">}</span><span class="mi">54</span><span class="n">c09d68</span><span class="o">-</span><span class="mi">9</span><span class="n">d1e</span><span class="o">-</span><span class="mi">4</span><span class="n">dd7</span><span class="o">-</span><span class="mi">8</span><span class="n">c9e</span><span class="o">-</span><span class="mf">480e559042</span><span class="n">ce</span>
+<span class="o">/</span><span class="n">mains</span><span class="p">}</span><span class="mf">114e0933</span><span class="o">-</span><span class="n">e8d8</span><span class="o">-</span><span class="mi">4742</span><span class="o">-</span><span class="n">a7ef</span><span class="o">-</span><span class="n">f4193734f14e</span>
+
+</code></pre><pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'in:</span><span class="se">\n</span><span class="s">/mains{3ca74782-b379-446e-8a59-1f96323d4b89</span><span class="se">\n</span><span class="s">/mains{cddbb832-eea0-4aa7-a427-36eb6fdba529</span><span class="se">\n</span><span class="s">/mains{9ef2ead1-e7ab-4b00-8454-52dc1be82a15</span><span class="se">\n</span><span class="s">/mains{ba78868f-47b2-442f-b6e7-de6ed54efc0a</span><span class="se">\n</span><span class="s">/mains{fe0663ec-08af-4a01-822e-05cf4312d775</span><span class="se">\n</span><span class="s">/mains{0258a013-8d9e-4655-94ee-0ac973350c2d</span><span class="se">\n</span><span class="s">/mains{4ebcb35e-7ae5-4c97-bb31-4c02a72cd53b</span><span class="se">\n</span><span class="s">/mains{fb1418ac-a93d-4562-9aae-0b4e9d7c6f13</span><span class="se">\n</span><span class="s">out:</span><span class="se">\n</span><span class="s">/mains}e5417ebc-76a0-4b9b-9afa-e8decb9561a8</span><span class="se">\n</span><span class="s">/mains}8b0fa997-9143-405a-84f8-d55f79d47cfd</span><span class="se">\n</span><span class="s">/mains</span><span class="err">
+</span><span class="s">}ac60fe34-b3be-4068-92eb-b508fc1fb3da</span><span class="se">\n</span><span class="s">/mains}f06b4ab4-1705-45d0-be41-c346822b3aee</span><span class="se">\n</span><span class="s">/mains}f5721f2a-0a32-4fe7-9500-b3afba48eaed</span><span class="se">\n</span><span class="s">/mains}dcf2ab1c-bd42-4860-89ba-a277f1da4262</span><span class="se">\n</span><span class="s">/mains}54c09d68-9d1e-4dd7-8c9e-480e559042ce</span><span class="se">\n</span><span class="s">/mains}114e0933-e8d8-4742-a7ef-f4193734f14e</span><span class="se">\n</span><span class="s">'</span><span class="p">]</span>
+</code></pre>
+<p>This namepsace lists all main inputs/outpus.</p>
+<h3 id='osc-namespace'>OSC Namespace</h3>
+<p>/cyperus/list/main</p>
+<h3 id='input-id-separator'>Input ID Separator</h3>
+<p><code>{</code></p>
+<h3 id='output-id-separator'>Output ID Separator</h3>
+<p><code>}</code></p>
+<h1 id='buses'>Buses</h1><h2 id='list-root-level-bus'>List Root-Level Bus</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
+  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+</code></pre>
 <p>This endpoint retrieves all kittens.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>GET http://example.com/api/kittens</code></p>
@@ -350,32 +338,7 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
 </aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2>
 <p>This endpoint retrieves a specific kitten.</p>
 
 <aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
@@ -393,30 +356,7 @@ Remember — a happy kitten is an authenticated kitten!
 <td>The ID of the kitten to retrieve</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2>
 <p>This endpoint deletes a specific kitten.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
@@ -494,10 +434,8 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
+                <a href="#" data-language-name="c">c</a>
                 <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
