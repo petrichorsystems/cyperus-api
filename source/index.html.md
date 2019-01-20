@@ -233,14 +233,14 @@ This namespace configures the send host and port.
 
 ### Message Arguments
 
-Argument | Type Tag | Example Data
+Argument | TypeTag | Example Data
 --------- | ------- | -----------
 host | s | "10.0.0.126"
 port | s | "3001"
 
 ### Response Arguments
 
-Argument | Type Tag | Example Data
+Argument | TypeTag | Example Data
 --------- | ------- | -----------
 host | s | "10.0.0.126"
 port | s | "3001"
@@ -249,9 +249,20 @@ port | s | "3001"
 
 ## List Mains
 
-> To get a list of Cyperus' current main inputs and outputs, use this namespace:
+> To get a list of Cyperus' current main inputs and outputs:
 
 ```python
+liblo.send(dest, "/cyperus/list/main")
+```
+
+```javascript
+    var msg_address = osc.toBuffer({
+        oscType: 'message',
+        address: '/cyperus/list/main',
+        args: []
+    });
+
+    udp.send(msg_address, 0, msg_address.length, 3000, '10.0.0.181');
 ```
 
 > The above namespace returns a new-line separated list of inputs and outputs like:
@@ -261,7 +272,15 @@ port | s | "3001"
 }ac60fe34-b3be-4068-92eb-b508fc1fb3da\n/mains}f06b4ab4-1705-45d0-be41-c346822b3aee\n/mains}f5721f2a-0a32-4fe7-9500-b3afba48eaed\n/mains}dcf2ab1c-bd42-4860-89ba-a277f1da4262\n/mains}54c09d68-9d1e-4dd7-8c9e-480e559042ce\n/mains}114e0933-e8d8-4742-a7ef-f4193734f14e\n']
 ```
 
-This namespace lists all main inputs/outputs.
+```javascript
+{ address: '/cyperus/list/main',
+  args: 
+   [ { type: 'string',
+       value: 'in:\n/mains{74752fe4-18ce-42e1-a174-21decacd6b58\n/mains{e072b0e0-bd93-40b4-88dc-3892ec212ea7\n/mains{4e40c809-3a92-48ec-a69b-87e986143c49\n/mains{619f0dcf-a02f-4895-9f30-bc277662bfd7\n/mains{c9d46d73-9485-4d63-a52d-3f0b7eb140e8\n/mains{5ecb0227-323d-452c-b275-1f68e7c79dec\n/mains{2a136665-2e77-4832-aa7d-89ab68e48306\n/mains{9749dd29-8cb5-46a9-94d4-26570f84d99c\nout:\n/mains}671f726c-4f92-4d92-bc99-3e0ac28a29da\n/mains}03a136e4-009b-4475-bff7-1cb73091119a\n/mains}740efebc-1ba0-4fcb-8228-8c02adfa90c2\n/mains}6f15f834-11f9-4dee-8a16-c78a22402245\n/mains}70983545-5cc5-4d22-9e38-fd7225bc91cb\n/mains}20cead11-c4bf-44fc-914b-9329bcd44698\n/mains}1087acbc-ea2c-4ea7-b129-22bb265e2971\n/mains}0f2e48eb-d8cb-4191-baa3-3582f98dafa3\n' } ],
+  oscType: 'message' }
+```
+
+This namespace lists all main inputs/outputs in the form of a newline-separated string.
 
 ### OSC Namespace
 
@@ -273,6 +292,18 @@ This namespace lists all main inputs/outputs.
 ### Output ID Separator
 `}`
 
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+n/a | n/a | n/a
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+mains list | s | "in:\n/mains{3ca74782-b379-446e-8a59-1f96323d4b89\nout:\n/mains}e5417ebc-76a0-4b9b-9afa-e8decb9561a8\n"
 # Buses
 
 ## List Root-Level Bus
