@@ -120,7 +120,7 @@ console.log('Listening for OSC messages on port 3001');
 
 # Address
 
-## Configure Send Address
+## Configure send address
 
 > To change the send address of the running instance of Cyperus:
 
@@ -229,7 +229,7 @@ This namespace configures the send host and port.
 
 ### OSC Namespace
 
-/cyperus/address ss
+`/cyperus/address ss`
 
 ### Message Arguments
 
@@ -247,7 +247,7 @@ port | s | "3001"
 
 # Mains
 
-## List Mains
+## List mains
 
 > To get a list of Cyperus' current main inputs and outputs:
 
@@ -284,7 +284,7 @@ This namespace lists all main inputs/outputs in the form of a newline-separated 
 
 ### OSC Namespace
 
-/cyperus/list/main
+`/cyperus/list/main`
 
 ### Input ID Separator
 `{`
@@ -306,57 +306,151 @@ Argument | TypeTag | Example Data
 mains list | s | "in:\n/mains{3ca74782-b379-446e-8a59-1f96323d4b89\nout:\n/mains}e5417ebc-76a0-4b9b-9afa-e8decb9561a8\n"
 # Buses
 
-## List Root-Level Bus
+## Add root-level bus
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+> To add a new dsp bus to the root-level:
+
+```python
+liblo.send(dest, "/cyperus/add/bus", "/", "main0", "in", "out")
 ```
 
-This endpoint retrieves all kittens.
+```javascript
+    var msg_address = osc.toBuffer({
+        oscType: 'message',
+        address: '/cyperus/add/bus',
+        args: [{
+            type: 'string',
+            value: '/'
+        },
+        {
+            type: 'string',
+            value: 'main0'
+        },
+        {
+            type: 'string',
+            value: 'in'
+        },
+        {
+            type: 'string',
+            value: 'out'
+        }]
 
-### HTTP Request
+    });
 
-`GET http://example.com/api/kittens`
+    udp.send(msg_address, 0, msg_address.length, 3000, '10.0.0.181');
+```
 
-### Query Parameters
+> Response is sent back containing original arguments and additionally `0` for success and `1` for fail:
 
-Parameter | Default | Description
+```python
+["/", "main0", "in", "out", 0]
+```
+
+```javascript
+{ address: '/cyperus/add/bus',
+  args:
+   [ { type: 'string', value: '/' },
+     { type: 'string', value: 'main0' },
+     { type: 'string', value: 'in' },
+     { type: 'string', value: 'out' },
+     { type: 'integer', value: 0 } ],
+  oscType: 'message' }
+
+```
+
+Adds a new root-level dsp bus given a path.
+
+### OSC Namespace
+
+`/cyperus/add/bus ssss`
+
+### ID Separator
+`/`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+path | s | "/"
+name | s | "main0"
+input bus-port names | s | "in"
+output bus-port names | s | "out"
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
+### Response Arguments
 
-## Get a Specific Kitten
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+path | s | "/"
+name | s | "main0"
+input bus-port names | s | "in"
+output bus-port names | s | "out"
+success | i | 0
 
-This endpoint retrieves a specific kitten.
+## List first root-level bus peer
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+> To list the first root-level bus peer:
 
-### HTTP Request
+```python
+liblo.send(dest, "/cyperus/list/bus", "/", 0)
+```
 
-`GET http://example.com/kittens/<ID>`
+```javascript
+    var msg_address = osc.toBuffer({
+        oscType: 'message',
+        address: '/cyperus/list/bus',
+        args: [{
+            type: 'string',
+            value: '/'
+        },
+        {
+            type: 'integer',
+            value: 0
+        }]
 
-### URL Parameters
+    });
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+    udp.send(msg_address, 0, msg_address.length, 3000, '10.0.0.181');
+```
 
-## Delete a Specific Kitten
+> Response is sent back containing original arguments and additionally `0` for success and `1` for fail:
 
-This endpoint deletes a specific kitten.
+```python
+['/', 1, 0, 'a264cd84-dad1-40d3-8e83-48b0f55434bd|main0|1|1\n']
+```
 
-### HTTP Request
+```javascript
+{ address: '/cyperus/list/bus',
+  args:
+   [ { type: 'string', value: '/' },
+     { type: 'integer', value: 0 },
+     { type: 'integer', value: 0 },
+     { type: 'string',
+       value: '910ba248-f715-41d1-a620-d458fc2a649e|main0|1|1\n' } ],
+  oscType: 'message' }
 
-`DELETE http://example.com/kittens/<ID>`
+```
 
-### URL Parameters
+Lists the first root-level bus peer
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+### OSC Namespace
 
+`/cyperus/list/bus si`
+
+### ID Separator
+`/`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+path | s | "/"
+list-type | i | 0
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+path | s | "/"
+list-type | i | 0
+success | i | 0
+result | s | a264cd84-dad1-40d3-8e83-48b0f55434bd|main0|1|1\n
