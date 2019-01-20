@@ -3,6 +3,7 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - python
+  - javascript
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -25,6 +26,98 @@ For now we only support the UC Berkeley CNMAT's open-sound-control protocol, if 
 <aside class="notice">
 Each unique object in the Cyperus API posseses a Version 4 UUID separated by a unique token for that type.
 </aside>
+# Client-Server
+
+To communicate with Cyperus, an Open-Sound-Control client-server is required. That means your process must be capable of both sending messages and receiving the corresponding response message. In the examples below, "pyliblo" is the module used for communication using Python and "osc-min" with JavaScript, but of course any language extended with an Open-Sound-Control interface may be used.
+
+The 'Address' section contains a full example illustrating the send/receive flow in both Python and JavaScript, the following sections only contain an example send and printed response.
+
+## Send messages
+
+> To send an OSC message, you must know the destination host and port. A non-existent message namespace is used as an example:
+
+```python
+import liblo
+dest = liblo.Address('10.0.0.181', 97211)
+liblo.send(dest, "/cyperus/message")
+```
+
+```javascript
+var osc = require('osc-min'),
+    dgram = require('dgram'),
+    remote;
+
+// listen for OSC messages and print them to the console
+var udp = dgram.createSocket('udp4', function() {});
+
+// build message with a few different OSC args
+var msg_address = osc.toBuffer({
+    oscType: 'message',
+    address: '/cyperus/message',
+    args: []
+});
+udp.send(msg_address, 0, msg_address.length, 3000, '10.0.0.181');
+
+```
+
+## Receive messages
+
+> To receive an OSC message, you must know which port to listen on:
+
+```python
+import liblo
+from liblo import *
+import queue, sys, time
+
+responses = queue.Queue()
+
+class OscServer(ServerThread):
+    def __init__(self):
+        ServerThread.__init__(self, 97217)
+        
+    @make_method('/cyperus/message')
+    def osc_message_handler(self, path, args):
+        s = args
+        responses.put(s)
+        print("received '/cyperus/message'")
+        
+    @make_method(None, None)
+    def fallback(self, path, args):
+        print("fallback, received '{}'".format(path))
+
+if __name__ == '__main__':
+    #incoming server
+    server = OscServer()
+
+    server.start()
+
+    input("press enter to quit...\n")
+```
+
+```javascript
+var osc = require('osc-min'),
+    dgram = require('dgram'),
+    remote;
+
+// listen for OSC messages and print them to the console
+var udp = dgram.createSocket('udp4', function(msg, rinfo) {
+
+  // save the remote address
+  remote = rinfo.address;
+
+  try {
+    console.log(osc.fromBuffer(msg));
+  } catch (err) {
+    console.log('Could not decode OSC message');
+  }
+
+});
+
+udp.bind(3001);
+console.log('Listening for OSC messages on port 3001');
+
+```
+
 # Address
 
 ## Configure Send Address
@@ -32,9 +125,89 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 > To change the send address of the running instance of Cyperus:
 
 ```python
+
 import liblo
-dest = liblo.Address(97211)
-liblo.send(dest, "/cyperus/address", "10.0.0.4", "97217")
+from liblo import *
+import queue, sys, time
+
+responses = queue.Queue()
+
+class OscServer(ServerThread):
+    def __init__(self):
+        ServerThread.__init__(self, 3001)
+        
+    @make_method('/cyperus/address', 'ss')
+    def osc_address_handler(self, path, args):
+        s = args
+        responses.put(s)
+        print("received '/cyperus/address'")
+
+    @make_method(None, None)
+    def fallback(self, path, args):
+        print("fallback, received '{}'".format(path))
+        
+def test_address_msg(dest):
+    liblo.send(dest, "/cyperus/address", "10.0.0.126", "3001")
+    response = responses.get()
+    print('/cyperus/address: ', response)
+
+if __name__ == '__main__':
+    #outgoing connection
+    dest = liblo.Address('10.0.0.181', 3000)
+
+    #incoming server
+    server = OscServer()
+
+    server.start()
+
+    test_address_msg(dest)
+
+    input("press enter to quit...\n")
+```
+
+```javascript
+var osc = require('osc-min'),
+    dgram = require('dgram'),
+    remote;
+
+// listen for OSC messages and print them to the console
+var udp = dgram.createSocket('udp4', function(msg, rinfo) {
+
+  // save the remote address
+  remote = rinfo.address;
+
+  try {
+    console.log(osc.fromBuffer(msg));
+  } catch (err) {
+    console.log('Could not decode OSC message');
+  }
+
+});
+
+function send() {
+  // build message with a few different OSC args
+
+    var msg_address = osc.toBuffer({
+	oscType: 'message',
+	address: '/cyperus/address',
+	args: [{
+	    type: 'string',
+	    value: '10.0.0.126'
+	},
+	{
+	    type: 'string',
+	    value: '3001'
+	}]
+    });
+    
+    udp.send(msg_address, 0, msg_address.length, 3000, '10.0.0.181');
+}
+
+udp.bind(3001);
+
+send.call()
+
+console.log('Listening for OSC messages on port 3001');
 ```
 
 > The above namespace returns the host and port to confirm:
@@ -42,6 +215,14 @@ liblo.send(dest, "/cyperus/address", "10.0.0.4", "97217")
 
 ```python
 ["10.0.0.4", "97217"]
+```
+
+```javascript
+{ address: '/cyperus/address',
+  args: 
+   [ { type: 'string', value: '10.0.0.126' },
+     { type: 'string', value: '3001' } ],
+  oscType: 'message' }
 ```
 
 This namespace configures the send host and port.
@@ -54,8 +235,15 @@ This namespace configures the send host and port.
 
 Argument | Type Tag | Example Data
 --------- | ------- | -----------
-host | s | "10.0.0.4"
-port | s | "97217"
+host | s | "10.0.0.126"
+port | s | "3001"
+
+### Response Arguments
+
+Argument | Type Tag | Example Data
+--------- | ------- | -----------
+host | s | "10.0.0.126"
+port | s | "3001"
 
 # Mains
 
@@ -64,9 +252,6 @@ port | s | "97217"
 > To get a list of Cyperus' current main inputs and outputs, use this namespace:
 
 ```python
-import liblo
-dest = liblo.Address(97211)
-liblo.send(dest, "/cyperus/list/main")
 ```
 
 > The above namespace returns a new-line separated list of inputs and outputs like:
