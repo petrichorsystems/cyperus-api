@@ -465,7 +465,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <table><thead>
 <tr>
 <th>Argument</th>
-<th>Type Tag</th>
+<th>TypeTag</th>
 <th>Example Data</th>
 </tr>
 </thead><tbody>
@@ -484,7 +484,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <table><thead>
 <tr>
 <th>Argument</th>
-<th>Type Tag</th>
+<th>TypeTag</th>
 <th>Example Data</th>
 </tr>
 </thead><tbody>
@@ -501,22 +501,63 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 </tbody></table>
 <h1 id='mains'>Mains</h1><h2 id='list-mains'>List Mains</h2>
 <blockquote>
-<p>To get a list of Cyperus&#39; current main inputs and outputs, use this namespace:</p>
+<p>To get a list of Cyperus&#39; current main inputs and outputs:</p>
 </blockquote>
-<pre class="highlight python tab-python"><code></code></pre>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/list/main"</span><span class="p">)</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>    <span class="kd">var</span> <span class="nx">msg_address</span> <span class="o">=</span> <span class="nx">osc</span><span class="p">.</span><span class="nx">toBuffer</span><span class="p">({</span>
+        <span class="na">oscType</span><span class="p">:</span> <span class="s1">'message'</span><span class="p">,</span>
+        <span class="na">address</span><span class="p">:</span> <span class="s1">'/cyperus/list/main'</span><span class="p">,</span>
+        <span class="na">args</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">});</span>
+
+    <span class="nx">udp</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg_address</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">msg_address</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="s1">'10.0.0.181'</span><span class="p">);</span>
+</code></pre>
 <blockquote>
 <p>The above namespace returns a new-line separated list of inputs and outputs like:</p>
 </blockquote>
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'in:</span><span class="se">\n</span><span class="s">/mains{3ca74782-b379-446e-8a59-1f96323d4b89</span><span class="se">\n</span><span class="s">/mains{cddbb832-eea0-4aa7-a427-36eb6fdba529</span><span class="se">\n</span><span class="s">/mains{9ef2ead1-e7ab-4b00-8454-52dc1be82a15</span><span class="se">\n</span><span class="s">/mains{ba78868f-47b2-442f-b6e7-de6ed54efc0a</span><span class="se">\n</span><span class="s">/mains{fe0663ec-08af-4a01-822e-05cf4312d775</span><span class="se">\n</span><span class="s">/mains{0258a013-8d9e-4655-94ee-0ac973350c2d</span><span class="se">\n</span><span class="s">/mains{4ebcb35e-7ae5-4c97-bb31-4c02a72cd53b</span><span class="se">\n</span><span class="s">/mains{fb1418ac-a93d-4562-9aae-0b4e9d7c6f13</span><span class="se">\n</span><span class="s">out:</span><span class="se">\n</span><span class="s">/mains}e5417ebc-76a0-4b9b-9afa-e8decb9561a8</span><span class="se">\n</span><span class="s">/mains}8b0fa997-9143-405a-84f8-d55f79d47cfd</span><span class="se">\n</span><span class="s">/mains</span><span class="err">
 </span><span class="s">}ac60fe34-b3be-4068-92eb-b508fc1fb3da</span><span class="se">\n</span><span class="s">/mains}f06b4ab4-1705-45d0-be41-c346822b3aee</span><span class="se">\n</span><span class="s">/mains}f5721f2a-0a32-4fe7-9500-b3afba48eaed</span><span class="se">\n</span><span class="s">/mains}dcf2ab1c-bd42-4860-89ba-a277f1da4262</span><span class="se">\n</span><span class="s">/mains}54c09d68-9d1e-4dd7-8c9e-480e559042ce</span><span class="se">\n</span><span class="s">/mains}114e0933-e8d8-4742-a7ef-f4193734f14e</span><span class="se">\n</span><span class="s">'</span><span class="p">]</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="p">{</span> <span class="nl">address</span><span class="p">:</span> <span class="s1">'/cyperus/list/main'</span><span class="p">,</span>
+  <span class="nx">args</span><span class="p">:</span> 
+   <span class="p">[</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+       <span class="na">value</span><span class="p">:</span> <span class="s1">'in:\n/mains{74752fe4-18ce-42e1-a174-21decacd6b58\n/mains{e072b0e0-bd93-40b4-88dc-3892ec212ea7\n/mains{4e40c809-3a92-48ec-a69b-87e986143c49\n/mains{619f0dcf-a02f-4895-9f30-bc277662bfd7\n/mains{c9d46d73-9485-4d63-a52d-3f0b7eb140e8\n/mains{5ecb0227-323d-452c-b275-1f68e7c79dec\n/mains{2a136665-2e77-4832-aa7d-89ab68e48306\n/mains{9749dd29-8cb5-46a9-94d4-26570f84d99c\nout:\n/mains}671f726c-4f92-4d92-bc99-3e0ac28a29da\n/mains}03a136e4-009b-4475-bff7-1cb73091119a\n/mains}740efebc-1ba0-4fcb-8228-8c02adfa90c2\n/mains}6f15f834-11f9-4dee-8a16-c78a22402245\n/mains}70983545-5cc5-4d22-9e38-fd7225bc91cb\n/mains}20cead11-c4bf-44fc-914b-9329bcd44698\n/mains}1087acbc-ea2c-4ea7-b129-22bb265e2971\n/mains}0f2e48eb-d8cb-4191-baa3-3582f98dafa3\n'</span> <span class="p">}</span> <span class="p">],</span>
+  <span class="nx">oscType</span><span class="p">:</span> <span class="s1">'message'</span> <span class="p">}</span>
 </code></pre>
-<p>This namespace lists all main inputs/outputs.</p>
+<p>This namespace lists all main inputs/outputs in the form of a newline-separated string.</p>
 <h3 id='osc-namespace-2'>OSC Namespace</h3>
 <p>/cyperus/list/main</p>
 <h3 id='input-id-separator'>Input ID Separator</h3>
 <p><code>{</code></p>
 <h3 id='output-id-separator'>Output ID Separator</h3>
 <p><code>}</code></p>
+<h3 id='message-arguments-2'>Message Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>n/a</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+</tbody></table>
+<h3 id='response-arguments-2'>Response Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>mains list</td>
+<td>s</td>
+<td>&quot;in:\n/mains{3ca74782-b379-446e-8a59-1f96323d4b89\nout:\n/mains}e5417ebc-76a0-4b9b-9afa-e8decb9561a8\n&quot;</td>
+</tr>
+</tbody></table>
 <h1 id='buses'>Buses</h1><h2 id='list-root-level-bus'>List Root-Level Bus</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
   -H <span class="s2">"Authorization: meowmeowmeow"</span>
 </code></pre>
