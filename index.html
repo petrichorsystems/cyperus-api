@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;python&quot;]">
+  <body class="index" data-languages="[&quot;python&quot;,&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,6 +212,7 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -220,6 +221,17 @@
       <ul id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#client-server" class="toc-h1 toc-link" data-title="Client-Server">Client-Server</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#send-messages" class="toc-h2 toc-link" data-title="Send messages">Send messages</a>
+                  </li>
+                  <li>
+                    <a href="#receive-messages" class="toc-h2 toc-link" data-title="Receive messages">Receive messages</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#address" class="toc-h1 toc-link" data-title="Address">Address</a>
@@ -273,18 +285,178 @@
 <aside class="notice">
 Each unique object in the Cyperus API posseses a Version 4 UUID separated by a unique token for that type.
 </aside>
-<h1 id='address'>Address</h1><h2 id='configure-send-address'>Configure Send Address</h2>
+<h1 id='client-server'>Client-Server</h1>
+<p>To communicate with Cyperus, an Open-Sound-Control client-server is required. That means your process must be capable of both sending messages and receiving the corresponding response message. In the examples below, &quot;pyliblo&quot; is the module used for communication using Python and &quot;osc-min&quot; with JavaScript, but of course any language extended with an Open-Sound-Control interface may be used.</p>
+
+<p>The &#39;Address&#39; section contains a full example illustrating the send/receive flow in both Python and JavaScript, the following sections only contain an example send and printed response.</p>
+<h2 id='send-messages'>Send messages</h2>
+<blockquote>
+<p>To send an OSC message, you must know the destination host and port. A non-existent message namespace is used as an example:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">liblo</span>
+<span class="n">dest</span> <span class="o">=</span> <span class="n">liblo</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">'10.0.0.181'</span><span class="p">,</span> <span class="mi">97211</span><span class="p">)</span>
+<span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/message"</span><span class="p">)</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">osc</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'osc-min'</span><span class="p">),</span>
+    <span class="nx">dgram</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'dgram'</span><span class="p">),</span>
+    <span class="nx">remote</span><span class="p">;</span>
+
+<span class="c1">// listen for OSC messages and print them to the console</span>
+<span class="kd">var</span> <span class="nx">udp</span> <span class="o">=</span> <span class="nx">dgram</span><span class="p">.</span><span class="nx">createSocket</span><span class="p">(</span><span class="s1">'udp4'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+
+<span class="c1">// build message with a few different OSC args</span>
+<span class="kd">var</span> <span class="nx">msg_address</span> <span class="o">=</span> <span class="nx">osc</span><span class="p">.</span><span class="nx">toBuffer</span><span class="p">({</span>
+    <span class="na">oscType</span><span class="p">:</span> <span class="s1">'message'</span><span class="p">,</span>
+    <span class="na">address</span><span class="p">:</span> <span class="s1">'/cyperus/message'</span><span class="p">,</span>
+    <span class="na">args</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">});</span>
+<span class="nx">udp</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg_address</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">msg_address</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="s1">'10.0.0.181'</span><span class="p">);</span>
+
+</code></pre><h2 id='receive-messages'>Receive messages</h2>
+<blockquote>
+<p>To receive an OSC message, you must know which port to listen on:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">liblo</span>
+<span class="kn">from</span> <span class="nn">liblo</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">queue</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">time</span>
+
+<span class="n">responses</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">OscServer</span><span class="p">(</span><span class="n">ServerThread</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ServerThread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">97217</span><span class="p">)</span>
+
+    <span class="nd">@make_method</span><span class="p">(</span><span class="s">'/cyperus/message'</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">osc_message_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="n">responses</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"received '/cyperus/message'"</span><span class="p">)</span>
+
+    <span class="nd">@make_method</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">fallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"fallback, received '{}'"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="c">#incoming server</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">OscServer</span><span class="p">()</span>
+
+    <span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="nb">input</span><span class="p">(</span><span class="s">"press enter to quit...</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">osc</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'osc-min'</span><span class="p">),</span>
+    <span class="nx">dgram</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'dgram'</span><span class="p">),</span>
+    <span class="nx">remote</span><span class="p">;</span>
+
+<span class="c1">// listen for OSC messages and print them to the console</span>
+<span class="kd">var</span> <span class="nx">udp</span> <span class="o">=</span> <span class="nx">dgram</span><span class="p">.</span><span class="nx">createSocket</span><span class="p">(</span><span class="s1">'udp4'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">rinfo</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">// save the remote address</span>
+  <span class="nx">remote</span> <span class="o">=</span> <span class="nx">rinfo</span><span class="p">.</span><span class="nx">address</span><span class="p">;</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">osc</span><span class="p">.</span><span class="nx">fromBuffer</span><span class="p">(</span><span class="nx">msg</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Could not decode OSC message'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+<span class="p">});</span>
+
+<span class="nx">udp</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="mi">3001</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Listening for OSC messages on port 3001'</span><span class="p">);</span>
+
+</code></pre><h1 id='address'>Address</h1><h2 id='configure-send-address'>Configure Send Address</h2>
 <blockquote>
 <p>To change the send address of the running instance of Cyperus:</p>
 </blockquote>
-<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">liblo</span>
-<span class="n">dest</span> <span class="o">=</span> <span class="n">liblo</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="mi">97211</span><span class="p">)</span>
-<span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/address"</span><span class="p">,</span> <span class="s">"10.0.0.4"</span><span class="p">,</span> <span class="s">"97217"</span><span class="p">)</span>
+<pre class="highlight python tab-python"><code>
+<span class="kn">import</span> <span class="nn">liblo</span>
+<span class="kn">from</span> <span class="nn">liblo</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">queue</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">time</span>
+
+<span class="n">responses</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">OscServer</span><span class="p">(</span><span class="n">ServerThread</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ServerThread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">3001</span><span class="p">)</span>
+
+    <span class="nd">@make_method</span><span class="p">(</span><span class="s">'/cyperus/address'</span><span class="p">,</span> <span class="s">'ss'</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">osc_address_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="n">responses</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"received '/cyperus/address'"</span><span class="p">)</span>
+
+    <span class="nd">@make_method</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">fallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"fallback, received '{}'"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">test_address_msg</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
+    <span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/address"</span><span class="p">,</span> <span class="s">"10.0.0.126"</span><span class="p">,</span> <span class="s">"3001"</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">responses</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'/cyperus/address: '</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="c">#outgoing connection</span>
+    <span class="n">dest</span> <span class="o">=</span> <span class="n">liblo</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="s">'10.0.0.181'</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+
+    <span class="c">#incoming server</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">OscServer</span><span class="p">()</span>
+
+    <span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">test_address_msg</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+
+    <span class="nb">input</span><span class="p">(</span><span class="s">"press enter to quit...</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">osc</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'osc-min'</span><span class="p">),</span>
+    <span class="nx">dgram</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'dgram'</span><span class="p">),</span>
+    <span class="nx">remote</span><span class="p">;</span>
+
+<span class="c1">// listen for OSC messages and print them to the console</span>
+<span class="kd">var</span> <span class="nx">udp</span> <span class="o">=</span> <span class="nx">dgram</span><span class="p">.</span><span class="nx">createSocket</span><span class="p">(</span><span class="s1">'udp4'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">rinfo</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">// save the remote address</span>
+  <span class="nx">remote</span> <span class="o">=</span> <span class="nx">rinfo</span><span class="p">.</span><span class="nx">address</span><span class="p">;</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">osc</span><span class="p">.</span><span class="nx">fromBuffer</span><span class="p">(</span><span class="nx">msg</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Could not decode OSC message'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+<span class="p">});</span>
+
+<span class="kd">function</span> <span class="nx">send</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// build message with a few different OSC args</span>
+
+    <span class="kd">var</span> <span class="nx">msg_address</span> <span class="o">=</span> <span class="nx">osc</span><span class="p">.</span><span class="nx">toBuffer</span><span class="p">({</span>
+    <span class="na">oscType</span><span class="p">:</span> <span class="s1">'message'</span><span class="p">,</span>
+    <span class="na">address</span><span class="p">:</span> <span class="s1">'/cyperus/address'</span><span class="p">,</span>
+    <span class="na">args</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+        <span class="na">value</span><span class="p">:</span> <span class="s1">'10.0.0.126'</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+        <span class="na">value</span><span class="p">:</span> <span class="s1">'3001'</span>
+    <span class="p">}]</span>
+    <span class="p">});</span>
+
+    <span class="nx">udp</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg_address</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">msg_address</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="s1">'10.0.0.181'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">udp</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="mi">3001</span><span class="p">);</span>
+
+<span class="nx">send</span><span class="p">.</span><span class="nx">call</span><span class="p">()</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Listening for OSC messages on port 3001'</span><span class="p">);</span>
 </code></pre>
 <blockquote>
 <p>The above namespace returns the host and port to confirm:</p>
 </blockquote>
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">"10.0.0.4"</span><span class="p">,</span> <span class="s">"97217"</span><span class="p">]</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="p">{</span> <span class="nl">address</span><span class="p">:</span> <span class="s1">'/cyperus/address'</span><span class="p">,</span>
+  <span class="nx">args</span><span class="p">:</span> 
+   <span class="p">[</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'10.0.0.126'</span> <span class="p">},</span>
+     <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'3001'</span> <span class="p">}</span> <span class="p">],</span>
+  <span class="nx">oscType</span><span class="p">:</span> <span class="s1">'message'</span> <span class="p">}</span>
 </code></pre>
 <p>This namespace configures the send host and port.</p>
 <h3 id='osc-namespace'>OSC Namespace</h3>
@@ -300,22 +472,38 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <tr>
 <td>host</td>
 <td>s</td>
-<td>&quot;10.0.0.4&quot;</td>
+<td>&quot;10.0.0.126&quot;</td>
 </tr>
 <tr>
 <td>port</td>
 <td>s</td>
-<td>&quot;97217&quot;</td>
+<td>&quot;3001&quot;</td>
+</tr>
+</tbody></table>
+<h3 id='response-arguments'>Response Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Type Tag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>host</td>
+<td>s</td>
+<td>&quot;10.0.0.126&quot;</td>
+</tr>
+<tr>
+<td>port</td>
+<td>s</td>
+<td>&quot;3001&quot;</td>
 </tr>
 </tbody></table>
 <h1 id='mains'>Mains</h1><h2 id='list-mains'>List Mains</h2>
 <blockquote>
 <p>To get a list of Cyperus&#39; current main inputs and outputs, use this namespace:</p>
 </blockquote>
-<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">liblo</span>
-<span class="n">dest</span> <span class="o">=</span> <span class="n">liblo</span><span class="o">.</span><span class="n">Address</span><span class="p">(</span><span class="mi">97211</span><span class="p">)</span>
-<span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/list/main"</span><span class="p">)</span>
-</code></pre>
+<pre class="highlight python tab-python"><code></code></pre>
 <blockquote>
 <p>The above namespace returns a new-line separated list of inputs and outputs like:</p>
 </blockquote>
@@ -455,6 +643,7 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
