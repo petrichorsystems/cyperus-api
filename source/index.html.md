@@ -304,7 +304,7 @@ n/a | n/a | n/a
 Argument | TypeTag | Example Data
 --------- | ------- | -----------
 mains list | s | "in:\n/mains{3ca74782-b379-446e-8a59-1f96323d4b89\nout:\n/mains}e5417ebc-76a0-4b9b-9afa-e8decb9561a8\n"
-# Buses
+# DSP Buses
 
 ## Add root-level bus
 
@@ -454,3 +454,159 @@ path | s | "/"
 list-type | i | 0
 success | i | 0
 result | s | a264cd84-dad1-40d3-8e83-48b0f55434bd|main0|1|1\n
+
+# DSP Modules
+
+## List Module Ports
+
+> To list the ports of a module in a given path:
+
+```python
+liblo.send(dest, "/cyperus/list/module/port", "/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a")
+```
+
+```javascript
+    var msg_address = osc.toBuffer({
+        oscType: 'message',
+        address: '/cyperus/add/module/sine',
+        args: [{
+            type: 'string',
+            value: '/'
+        },
+        {
+            type: 'string',
+            value: 'main0'
+        },
+        {
+            type: 'string',
+            value: 'in'
+        },
+        {
+            type: 'string',
+            value: 'out'
+        }]
+
+    });
+
+    udp.send(msg_address, 0, msg_address.length, 3000, '10.0.0.181');
+```
+
+> Response is sent back containing a newline-separated list of a module's ports:
+
+```python
+['/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a', 'in:\n3c841b45-d29d-44de-8abe-6a7c8a632964|in\nout:\n95f76f45-be0e-4b4b-9d00-945da1ea7af8|out\n']
+```
+
+```javascript
+{ address: '/cyperus/add/bus',
+  args:
+   [ { type: 'string', value: '/' },
+     { type: 'string', value: 'main0' },
+     { type: 'string', value: 'in' },
+     { type: 'string', value: 'out' },
+     { type: 'integer', value: 0 } ],
+  oscType: 'message' }
+
+```
+
+Adds a new sine generator module to a given path.
+
+### OSC Namespace
+
+`/cyperus/list/module/port s`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module-path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a"
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module-path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a"
+result | s | "in:\n3c841b45-d29d-44de-8abe-6a7c8a632964|in\nout:\n95f76f45-be0e-4b4b-9d00-945da1ea7af8|out\n"
+
+## Add Sine Module
+
+> To add a new sine module to a given path:
+
+```python
+liblo.send(dest, "/cyperus/add/module/sine", "/", "main0", "in", "out")
+```
+
+```javascript
+    var msg_address = osc.toBuffer({
+        oscType: 'message',
+        address: '/cyperus/add/module/sine',
+        args: [{
+            type: 'string',
+            value: '/'
+        },
+        {
+            type: 'string',
+            value: 'main0'
+        },
+        {
+            type: 'string',
+            value: 'in'
+        },
+        {
+            type: 'string',
+            value: 'out'
+        }]
+
+    });
+
+    udp.send(msg_address, 0, msg_address.length, 3000, '10.0.0.181');
+```
+
+> Response is sent back containing original arguments and additionally `0` for success and `1` for fail:
+
+```python
+["/", "main0", "in", "out", 0]
+```
+
+```javascript
+{ address: '/cyperus/add/bus',
+  args:
+   [ { type: 'string', value: '/' },
+     { type: 'string', value: 'main0' },
+     { type: 'string', value: 'in' },
+     { type: 'string', value: 'out' },
+     { type: 'integer', value: 0 } ],
+  oscType: 'message' }
+
+```
+
+Adds a new sine generator module to a given path.
+
+### OSC Namespace
+
+`/cyperus/add/module/sine sfff`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+bus path | s | "/"
+frequency (hertz) | f | 100.0
+amplitude | f | 1.0
+phase | f | 0.0
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module id | s | "e5c39cc4-7932-4186-a1be-ecb78fd25234"
+frequency (hertz) | f | 100.0
+amplitude | f | 1.0
+phase | f | 0.0
