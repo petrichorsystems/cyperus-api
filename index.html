@@ -250,13 +250,24 @@
               </ul>
           </li>
           <li>
-            <a href="#buses" class="toc-h1 toc-link" data-title="Buses">Buses</a>
+            <a href="#dsp-buses" class="toc-h1 toc-link" data-title="DSP Buses">DSP Buses</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#add-root-level-bus" class="toc-h2 toc-link" data-title="Add root-level bus">Add root-level bus</a>
                   </li>
                   <li>
                     <a href="#list-first-root-level-bus-peer" class="toc-h2 toc-link" data-title="List first root-level bus peer">List first root-level bus peer</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#dsp-modules" class="toc-h1 toc-link" data-title="DSP Modules">DSP Modules</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#list-module-ports" class="toc-h2 toc-link" data-title="List Module Ports">List Module Ports</a>
+                  </li>
+                  <li>
+                    <a href="#add-sine-module" class="toc-h2 toc-link" data-title="Add Sine Module">Add Sine Module</a>
                   </li>
               </ul>
           </li>
@@ -555,7 +566,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>&quot;in:\n/mains{3ca74782-b379-446e-8a59-1f96323d4b89\nout:\n/mains}e5417ebc-76a0-4b9b-9afa-e8decb9561a8\n&quot;</td>
 </tr>
 </tbody></table>
-<h1 id='buses'>Buses</h1><h2 id='add-root-level-bus'>Add root-level bus</h2>
+<h1 id='dsp-buses'>DSP Buses</h1><h2 id='add-root-level-bus'>Add root-level bus</h2>
 <blockquote>
 <p>To add a new dsp bus to the root-level:</p>
 </blockquote>
@@ -752,6 +763,193 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>result</td>
 <td>s</td>
 <td>a264cd84-dad1-40d3-8e83-48b0f55434bd</td>
+</tr>
+</tbody></table>
+<h1 id='dsp-modules'>DSP Modules</h1><h2 id='list-module-ports'>List Module Ports</h2>
+<blockquote>
+<p>To list the ports of a module in a given path:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/list/module/port"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a"</span><span class="p">)</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>    <span class="kd">var</span> <span class="nx">msg_address</span> <span class="o">=</span> <span class="nx">osc</span><span class="p">.</span><span class="nx">toBuffer</span><span class="p">({</span>
+        <span class="na">oscType</span><span class="p">:</span> <span class="s1">'message'</span><span class="p">,</span>
+        <span class="na">address</span><span class="p">:</span> <span class="s1">'/cyperus/add/module/sine'</span><span class="p">,</span>
+        <span class="na">args</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="s1">'/'</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="s1">'main0'</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="s1">'in'</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="s1">'out'</span>
+        <span class="p">}]</span>
+
+    <span class="p">});</span>
+
+    <span class="nx">udp</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg_address</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">msg_address</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="s1">'10.0.0.181'</span><span class="p">);</span>
+</code></pre>
+<blockquote>
+<p>Response is sent back containing a newline-separated list of a module&#39;s ports:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a'</span><span class="p">,</span> <span class="s">'in:</span><span class="se">\n</span><span class="s">3c841b45-d29d-44de-8abe-6a7c8a632964|in</span><span class="se">\n</span><span class="s">out:</span><span class="se">\n</span><span class="s">95f76f45-be0e-4b4b-9d00-945da1ea7af8|out</span><span class="se">\n</span><span class="s">'</span><span class="p">]</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="p">{</span> <span class="nl">address</span><span class="p">:</span> <span class="s1">'/cyperus/add/bus'</span><span class="p">,</span>
+  <span class="nx">args</span><span class="p">:</span>
+   <span class="p">[</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'/'</span> <span class="p">},</span>
+     <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'main0'</span> <span class="p">},</span>
+     <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'in'</span> <span class="p">},</span>
+     <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'out'</span> <span class="p">},</span>
+     <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'integer'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span> <span class="p">],</span>
+  <span class="nx">oscType</span><span class="p">:</span> <span class="s1">'message'</span> <span class="p">}</span>
+
+</code></pre>
+<p>Adds a new sine generator module to a given path.</p>
+<h3 id='osc-namespace-5'>OSC Namespace</h3>
+<p><code>/cyperus/list/module/port s</code></p>
+<h3 id='id-separator-3'>ID Separator</h3>
+<p><code>?</code></p>
+<h3 id='message-arguments-5'>Message Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>module-path</td>
+<td>s</td>
+<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a&quot;</td>
+</tr>
+</tbody></table>
+<h3 id='response-arguments-5'>Response Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>module-path</td>
+<td>s</td>
+<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a&quot;</td>
+</tr>
+<tr>
+<td>result</td>
+<td>s</td>
+<td>&quot;in:\n3c841b45-d29d-44de-8abe-6a7c8a632964</td>
+</tr>
+</tbody></table>
+<h2 id='add-sine-module'>Add Sine Module</h2>
+<blockquote>
+<p>To add a new sine module to a given path:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/add/module/sine"</span><span class="p">,</span> <span class="s">"/"</span><span class="p">,</span> <span class="s">"main0"</span><span class="p">,</span> <span class="s">"in"</span><span class="p">,</span> <span class="s">"out"</span><span class="p">)</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>    <span class="kd">var</span> <span class="nx">msg_address</span> <span class="o">=</span> <span class="nx">osc</span><span class="p">.</span><span class="nx">toBuffer</span><span class="p">({</span>
+        <span class="na">oscType</span><span class="p">:</span> <span class="s1">'message'</span><span class="p">,</span>
+        <span class="na">address</span><span class="p">:</span> <span class="s1">'/cyperus/add/module/sine'</span><span class="p">,</span>
+        <span class="na">args</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="s1">'/'</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="s1">'main0'</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="s1">'in'</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="s1">'out'</span>
+        <span class="p">}]</span>
+
+    <span class="p">});</span>
+
+    <span class="nx">udp</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg_address</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">msg_address</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="s1">'10.0.0.181'</span><span class="p">);</span>
+</code></pre>
+<blockquote>
+<p>Response is sent back containing original arguments and additionally <code>0</code> for success and <code>1</code> for fail:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">"/"</span><span class="p">,</span> <span class="s">"main0"</span><span class="p">,</span> <span class="s">"in"</span><span class="p">,</span> <span class="s">"out"</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="p">{</span> <span class="nl">address</span><span class="p">:</span> <span class="s1">'/cyperus/add/bus'</span><span class="p">,</span>
+  <span class="nx">args</span><span class="p">:</span>
+   <span class="p">[</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'/'</span> <span class="p">},</span>
+     <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'main0'</span> <span class="p">},</span>
+     <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'in'</span> <span class="p">},</span>
+     <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="s1">'out'</span> <span class="p">},</span>
+     <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="s1">'integer'</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span> <span class="p">],</span>
+  <span class="nx">oscType</span><span class="p">:</span> <span class="s1">'message'</span> <span class="p">}</span>
+
+</code></pre>
+<p>Adds a new sine generator module to a given path.</p>
+<h3 id='osc-namespace-6'>OSC Namespace</h3>
+<p><code>/cyperus/add/module/sine sfff</code></p>
+<h3 id='id-separator-4'>ID Separator</h3>
+<p><code>?</code></p>
+<h3 id='message-arguments-6'>Message Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>bus path</td>
+<td>s</td>
+<td>&quot;/&quot;</td>
+</tr>
+<tr>
+<td>frequency (hertz)</td>
+<td>f</td>
+<td>100.0</td>
+</tr>
+<tr>
+<td>amplitude</td>
+<td>f</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>phase</td>
+<td>f</td>
+<td>0.0</td>
+</tr>
+</tbody></table>
+<h3 id='response-arguments-6'>Response Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>module id</td>
+<td>s</td>
+<td>&quot;e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
+</tr>
+<tr>
+<td>frequency (hertz)</td>
+<td>f</td>
+<td>100.0</td>
+</tr>
+<tr>
+<td>amplitude</td>
+<td>f</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>phase</td>
+<td>f</td>
+<td>0.0</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
