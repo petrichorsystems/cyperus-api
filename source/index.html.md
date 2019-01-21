@@ -509,7 +509,7 @@ liblo.send(dest, "/cyperus/list/module/port", "/a7788829-f087-4631-92fb-6f39d2e6
 
 ```
 
-Adds a new sine generator module to a given path.
+Lists ports belonging to a module in a given path.
 
 ### OSC Namespace
 
