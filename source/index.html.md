@@ -214,7 +214,7 @@ console.log('Listening for OSC messages on port 3001');
 
 
 ```python
-["10.0.0.4", "97217"]
+["10.0.0.126", "3001"]
 ```
 
 ```javascript
