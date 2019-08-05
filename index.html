@@ -266,6 +266,9 @@
             <a href="#dsp-modules" class="toc-h1 toc-link" data-title="DSP Modules">DSP Modules</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#list-modules" class="toc-h2 toc-link" data-title="List Modules">List Modules</a>
+                  </li>
+                  <li>
                     <a href="#list-module-ports" class="toc-h2 toc-link" data-title="List Module Ports">List Module Ports</a>
                   </li>
                   <li>
@@ -675,7 +678,51 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>a264cd84-dad1-40d3-8e83-48b0f55434bd</td>
 </tr>
 </tbody></table>
-<h1 id='dsp-modules'>DSP Modules</h1><h2 id='list-module-ports'>List Module Ports</h2>
+<h1 id='dsp-modules'>DSP Modules</h1><h2 id='list-modules'>List Modules</h2>
+<blockquote>
+<p>To list the ports of a module in a given path:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/list/module"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9"</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Response is sent back containing a newline-separated list of modules:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'aa628862-33f9-43e3-ab6b-61b36f6f503a</span><span class="se">\n</span><span class="s">95f76f45-be0e-4b4b-9d00-945da1ea7af8'</span><span class="p">]</span>
+</code></pre>
+<p>Lists modules belonging to a bus, in a given path.</p>
+<h3 id='osc-namespace-6'>OSC Namespace</h3>
+<p><code>/cyperus/list/module s</code></p>
+<h3 id='id-separator-4'>ID Separator</h3>
+<p><code>/</code></p>
+<h3 id='message-arguments-6'>Message Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>bus-path</td>
+<td>s</td>
+<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9&quot;</td>
+</tr>
+</tbody></table>
+<h3 id='response-arguments-6'>Response Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>result</td>
+<td>s</td>
+<td>&quot;aa628862-33f9-43e3-ab6b-61b36f6f503a\n95f76f45-be0e-4b4b-9d00-945da1ea7af8&quot;</td>
+</tr>
+</tbody></table>
+<h2 id='list-module-ports'>List Module Ports</h2>
 <blockquote>
 <p>To list the ports of a module in a given path:</p>
 </blockquote>
@@ -687,11 +734,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a'</span><span class="p">,</span> <span class="s">'in:</span><span class="se">\n</span><span class="s">3c841b45-d29d-44de-8abe-6a7c8a632964|in</span><span class="se">\n</span><span class="s">out:</span><span class="se">\n</span><span class="s">95f76f45-be0e-4b4b-9d00-945da1ea7af8|out</span><span class="se">\n</span><span class="s">'</span><span class="p">]</span>
 </code></pre>
 <p>Lists ports belonging to a module in a given path.</p>
-<h3 id='osc-namespace-6'>OSC Namespace</h3>
+<h3 id='osc-namespace-7'>OSC Namespace</h3>
 <p><code>/cyperus/list/module/port s</code></p>
-<h3 id='id-separator-4'>ID Separator</h3>
+<h3 id='id-separator-5'>ID Separator</h3>
 <p><code>?</code></p>
-<h3 id='message-arguments-6'>Message Arguments</h3>
+<h3 id='message-arguments-7'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -705,7 +752,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9?aa628862-33f9-43e3-ab6b-61b36f6f503a&quot;</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-6'>Response Arguments</h3>
+<h3 id='response-arguments-7'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -736,11 +783,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">"/"</span><span class="p">,</span> <span class="s">"e5c39cc4-7932-4186-a1be-ecb78fd25234"</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
 </code></pre>
 <p>Adds a new sine generator module to a given path.</p>
-<h3 id='osc-namespace-7'>OSC Namespace</h3>
+<h3 id='osc-namespace-8'>OSC Namespace</h3>
 <p><code>/cyperus/add/module/sine sfff</code></p>
-<h3 id='id-separator-5'>ID Separator</h3>
+<h3 id='id-separator-6'>ID Separator</h3>
 <p><code>?</code></p>
-<h3 id='message-arguments-7'>Message Arguments</h3>
+<h3 id='message-arguments-8'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -769,7 +816,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>0.0</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-7'>Response Arguments</h3>
+<h3 id='response-arguments-8'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -810,11 +857,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
 </code></pre>
 <p>Adds a new delay module to a given path.</p>
-<h3 id='osc-namespace-8'>OSC Namespace</h3>
+<h3 id='osc-namespace-9'>OSC Namespace</h3>
 <p><code>/cyperus/add/module/delay sfff</code></p>
-<h3 id='id-separator-6'>ID Separator</h3>
+<h3 id='id-separator-7'>ID Separator</h3>
 <p><code>?</code></p>
-<h3 id='message-arguments-8'>Message Arguments</h3>
+<h3 id='message-arguments-9'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -843,7 +890,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>0.8</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-8'>Response Arguments</h3>
+<h3 id='response-arguments-9'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -884,11 +931,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
 </code></pre>
 <p>Adds a new envelope follower module to a given path.</p>
-<h3 id='osc-namespace-9'>OSC Namespace</h3>
+<h3 id='osc-namespace-10'>OSC Namespace</h3>
 <p><code>/cyperus/add/module/envelope follower sfff</code></p>
-<h3 id='id-separator-7'>ID Separator</h3>
+<h3 id='id-separator-8'>ID Separator</h3>
 <p><code>?</code></p>
-<h3 id='message-arguments-9'>Message Arguments</h3>
+<h3 id='message-arguments-10'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -917,7 +964,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>1.0</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-9'>Response Arguments</h3>
+<h3 id='response-arguments-10'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -958,7 +1005,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51:eefd199b-eb1b-41eb-8f9c-381f683a8b91'</span><span class="p">,</span> <span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51?7e8ffe83-6afd-4ad2-bc33-c4ca9c3377d0&lt;7bb05e05-e43f-4f5d-bee3-4400c71e1999'</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 </code></pre>
 <p>Adds a connection between dsp ports and/or dsp bus ports.</p>
-<h3 id='osc-namespace-10'>OSC Namespace</h3>
+<h3 id='osc-namespace-11'>OSC Namespace</h3>
 <p><code>/cyperus/add/connection ss</code></p>
 <h3 id='input-port-id-separator'>Input Port ID Separator</h3>
 <p><code>&lt;</code></p>
@@ -966,7 +1013,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <p><code>&gt;</code></p>
 <h3 id='bus-port-id-separator'>Bus Port ID Separator</h3>
 <p><code>:</code>  </p>
-<h3 id='message-arguments-10'>Message Arguments</h3>
+<h3 id='message-arguments-11'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -985,7 +1032,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>&quot;/f38e9de7-d26b-4aba-b7e9-bc069e293d51?7e8ffe83-6afd-4ad2-bc33-c4ca9c3377d0&lt;7bb05e05-e43f-4f5d-bee3-4400c71e1999&quot;</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-10'>Response Arguments</h3>
+<h3 id='response-arguments-11'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
