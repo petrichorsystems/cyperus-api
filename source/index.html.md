@@ -310,9 +310,47 @@ path | s | "/"
 list-type | i | 0
 success | i | 0
 result | s | a264cd84-dad1-40d3-8e83-48b0f55434bd|main0|1|1\n
-
+    
 # DSP Modules
 
+## List Modules
+
+> To list the ports of a module in a given path:
+
+```python
+liblo.send(dest, "/cyperus/list/module", "/a7788829-f087-4631-92fb-6f39d2e67ba9")
+```
+
+
+> Response is sent back containing a newline-separated list of modules:
+
+```python
+['aa628862-33f9-43e3-ab6b-61b36f6f503a\n95f76f45-be0e-4b4b-9d00-945da1ea7af8']
+```
+
+
+Lists modules belonging to a bus, in a given path.
+
+### OSC Namespace
+
+`/cyperus/list/module s`
+
+### ID Separator
+`/`
+
+### Message Arguments
+
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+bus-path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9"
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+result | s | "aa628862-33f9-43e3-ab6b-61b36f6f503a\n95f76f45-be0e-4b4b-9d00-945da1ea7af8"
+    
 ## List Module Ports
 
 > To list the ports of a module in a given path:
