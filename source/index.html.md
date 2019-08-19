@@ -472,6 +472,47 @@ amplitude | f | 1.0
 time (sec) | f | 1.0
 feedback | f | 0.8
 
+## Edit Delay Module
+
+> To edit parameters of a delay module at a given path:
+
+```python
+liblo.send(dest, "/cyperus/edit/module/delay", "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234", 1.0, 1.0, 0.8)
+```
+
+> Response is sent back with given path and edited parameters:
+
+```python
+['/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234', 1.0, 1.0, 0.8]
+```
+
+Edits parameters of a delay module at a given path.
+
+### OSC Namespace
+
+`/cyperus/edit/module/delay sfff`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amplitude | f | 1.0
+time (sec) | f | 1.0
+feedback | f | 0.8
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amplitude | f | 1.0
+time (sec) | f | 1.0
+feedback | f | 0.8
+
 ## Add Envelope Follower Module
 
 > To add a new envelope follower module to a given path:
