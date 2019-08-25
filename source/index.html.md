@@ -743,7 +743,7 @@ Argument | TypeTag | Example Data
 module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
 amt | f | amplitude, range 0/1
 cutoff freq | f | 440.0
-
+    
 ### Response Arguments
 
 Argument | TypeTag | Example Data
@@ -752,6 +752,87 @@ module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be
 amt | f | amplitude, range 0/1
 cutoff freq | f | 440.0
 
+## Add Bandpass Module
+
+> To add a new highpass module to a given path:
+
+```python
+liblo.send(dest, "/cyperus/add/module/bandpass", "/a7788829-f087-4631-92fb-6f39d2e67ba9", 1.0, 220.0, 0.2)
+```
+
+> Response is sent back containing new module id and creation parameters:
+
+```python
+['e5c39cc4-7932-4186-a1be-ecb78fd25234', 1.0, 220.0, 0.2]
+```
+
+Adds a new bandpass module to a given path.
+
+### OSC Namespace
+
+`/cyperus/add/module/bandpass sfff`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+bus path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+q | f | 0.5
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module id | s | "e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+q | f | 0.5
+    
+## Edit Bandpass Module
+
+> To edit parameters of a bandpass module at a given path:
+
+```python
+liblo.send(dest, "/cyperus/edit/module/bandpass", "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234", 1.0, 440.0, 0.5)
+```
+
+> Response is sent back with given path and edited parameters:
+
+```python
+['/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234', 1.0, 440.0, 0.5]
+```
+
+Edits parameters of a bandpass module at a given path.
+
+### OSC Namespace
+
+`/cyperus/edit/module/bandpass sfff`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+q | f | 0.2
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+q | f | 0.2
     
 # DSP Connections
 
