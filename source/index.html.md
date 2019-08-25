@@ -431,6 +431,47 @@ frequency (hertz) | f | 100.0
 amplitude | f | 1.0
 phase | f | 0.0
 
+## Edit Sine Module
+
+> To edit an existing sine module at a given path:
+
+```python
+liblo.send(dest, "/cyperus/edit/module/sine", "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234", 440, 1.0, 0.0)
+```
+
+> Response is sent back containing module path and updated parameters::
+
+```python
+["/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234", 440, 1.0, 0.0]
+```
+
+Adds a new sine generator module to a given path.
+
+### OSC Namespace
+
+`/cyperus/edit/module/sine sfff`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+frequency (hertz) | f | 440.0
+amplitude | f | 1.0
+phase | f | 0.0
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+frequency (hertz) | f | 440.0
+amplitude | f | 1.0
+phase | f | 0.0
+
 ## Add Delay Module
 
 > To add a new delay module to a given path:
@@ -554,6 +595,164 @@ attack (ms) | f | 1.0
 decay (ms) | f | 1.0
 scale | f | 1.0
 
+## Add Lowpass Module
+
+> To add a new lowpass module to a given path:
+
+```python
+liblo.send(dest, "/cyperus/add/module/lowpass", "/a7788829-f087-4631-92fb-6f39d2e67ba9", 1.0, 220.0)
+```
+
+> Response is sent back containing new module id and creation parameters:
+
+```python
+['e5c39cc4-7932-4186-a1be-ecb78fd25234', 1.0, 1.0, 0.8]
+```
+
+Adds a new lowpass module to a given path.
+
+### OSC Namespace
+
+`/cyperus/add/module/lowpass sff`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+bus path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module id | s | "e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+
+## Edit Lowpass Module
+
+> To edit parameters of a lowpass module at a given path:
+
+```python
+liblo.send(dest, "/cyperus/edit/module/lowpass", "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234", 1.0, 440.0)
+```
+
+> Response is sent back with given path and edited parameters:
+
+```python
+['/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234', 1.0, 440.0]
+```
+
+Edits parameters of a lowpass module at a given path.
+
+### OSC Namespace
+
+`/cyperus/edit/module/lowpass sff`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+
+
+## Add Highpass Module
+
+> To add a new highpass module to a given path:
+
+```python
+liblo.send(dest, "/cyperus/add/module/highpass", "/a7788829-f087-4631-92fb-6f39d2e67ba9", 1.0, 220.0)
+```
+
+> Response is sent back containing new module id and creation parameters:
+
+```python
+['e5c39cc4-7932-4186-a1be-ecb78fd25234', 1.0, 1.0, 0.8]
+```
+
+Adds a new highpass module to a given path.
+
+### OSC Namespace
+
+`/cyperus/add/module/highpass sff`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+bus path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module id | s | "e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+
+## Edit Highpass Module
+
+> To edit parameters of a highpass module at a given path:
+
+```python
+liblo.send(dest, "/cyperus/edit/module/highpass", "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234", 1.0, 440.0)
+```
+
+> Response is sent back with given path and edited parameters:
+
+```python
+['/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234', 1.0, 440.0]
+```
+
+Edits parameters of a highpass module at a given path.
+
+### OSC Namespace
+
+`/cyperus/edit/module/highpass sff`
+
+### ID Separator
+`?`
+
+### Message Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+
+### Response Arguments
+
+Argument | TypeTag | Example Data
+--------- | ------- | -----------
+module path | s | "/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"
+amt | f | amplitude, range 0/1
+cutoff freq | f | 440.0
+
+    
 # DSP Connections
 
 ## Add Connection
