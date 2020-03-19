@@ -312,6 +312,9 @@
                   <li>
                     <a href="#add-connection" class="toc-h2 toc-link" data-title="Add Connection">Add Connection</a>
                   </li>
+                  <li>
+                    <a href="#remove-connection" class="toc-h2 toc-link" data-title="Remove Connection">Remove Connection</a>
+                  </li>
               </ul>
           </li>
       </ul>
@@ -1581,6 +1584,18 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51:eefd199b-eb1b-41eb-8f9c-381f683a8b91'</span><span class="p">,</span> <span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51?7e8ffe83-6afd-4ad2-bc33-c4ca9c3377d0&lt;7bb05e05-e43f-4f5d-bee3-4400c71e1999'</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 </code></pre>
 <p>Adds a connection between dsp ports and/or dsp bus ports.</p>
+<h2 id='remove-connection'>Remove Connection</h2>
+<blockquote>
+<p>To remove a connection between dsp ports and/or dsp bus ports:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/remove/connection"</span><span class="p">,</span> <span class="s">"/f38e9de7-d26b-4aba-b7e9-bc069e293d51:eefd199b-eb1b-41eb-8f9c-381f683a8b91"</span><span class="p">,</span> <span class="s">"/f38e9de7-d26b-4aba-b7e9-bc069e293d51?7e8ffe83-6afd-4ad2-bc33-c4ca9c3377d0&lt;7bb05e05-e43f-4f5d-bee3-4400c71e1999"</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Response is sent back containing attempted removal of connection ports and success result of <code>0</code></p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51:eefd199b-eb1b-41eb-8f9c-381f683a8b91'</span><span class="p">,</span> <span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51?7e8ffe83-6afd-4ad2-bc33-c4ca9c3377d0&lt;7bb05e05-e43f-4f5d-bee3-4400c71e1999'</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</code></pre>
+<p>Removes a connection between dsp ports and/or dsp bus ports.</p>
 <h3 id='osc-namespace-19'>OSC Namespace</h3>
 <p><code>/cyperus/add/connection ss</code></p>
 <h3 id='input-port-id-separator'>Input Port ID Separator</h3>
