@@ -569,9 +569,9 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/add/bus"</span><span class="p">,</span> <span class="s">"/"</span><span class="p">,</span> <span class="s">"main0"</span><span class="p">,</span> <span class="s">"in"</span><span class="p">,</span> <span class="s">"out"</span><span class="p">)</span>
 </code></pre>
 <blockquote>
-<p>Response is sent back containing original arguments and additionally <code>0</code> for success and <code>1</code> for fail:</p>
+<p>Response is sent back containing original arguments, the new bus id, and <code>0</code> for success and <code>1</code> for fail:</p>
 </blockquote>
-<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">"/"</span><span class="p">,</span> <span class="s">"main0"</span><span class="p">,</span> <span class="s">"in"</span><span class="p">,</span> <span class="s">"out"</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">"/"</span><span class="p">,</span> <span class="s">"main0"</span><span class="p">,</span> <span class="s">"in"</span><span class="p">,</span> <span class="s">"out"</span><span class="p">,</span> <span class="s">"5be36bff-104b-469b-b568-64a4473e2347"</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 </code></pre>
 <p>Adds a new root-level dsp bus given a path.</p>
 <h3 id='osc-namespace-4'>OSC Namespace</h3>
@@ -634,6 +634,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>output bus-port names</td>
 <td>s</td>
 <td>&quot;out&quot;</td>
+</tr>
+<tr>
+<td>new bus id</td>
+<td>s</td>
+<td>&quot;5be36bff-104b-469b-b568-64a4473e2347&quot;</td>
 </tr>
 <tr>
 <td>success</td>
