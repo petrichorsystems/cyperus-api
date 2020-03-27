@@ -278,6 +278,12 @@
                     <a href="#edit-sine-module" class="toc-h2 toc-link" data-title="Edit Sine Module">Edit Sine Module</a>
                   </li>
                   <li>
+                    <a href="#add-triangle-module" class="toc-h2 toc-link" data-title="Add Triangle Module">Add Triangle Module</a>
+                  </li>
+                  <li>
+                    <a href="#edit-triangle-module" class="toc-h2 toc-link" data-title="Edit Triangle Module">Edit Triangle Module</a>
+                  </li>
+                  <li>
                     <a href="#add-delay-module" class="toc-h2 toc-link" data-title="Add Delay Module">Add Delay Module</a>
                   </li>
                   <li>
@@ -951,6 +957,134 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>0.0</td>
 </tr>
 </tbody></table>
+<h2 id='add-triangle-module'>Add Triangle Module</h2>
+<blockquote>
+<p>To add a new triangle module to a given path:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/add/module/triangle"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9"</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Response is sent back containing new module id and creation parameters::</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">"/"</span><span class="p">,</span> <span class="s">"e5c39cc4-7932-4186-a1be-ecb78fd25234"</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+</code></pre>
+<p>Adds a new triangle generator module to a given path.</p>
+<h3 id='osc-namespace-10'>OSC Namespace</h3>
+<p><code>/cyperus/add/module/triangle sff</code></p>
+<h3 id='id-separator-8'>ID Separator</h3>
+<p><code>?</code></p>
+<h3 id='message-arguments-10'>Message Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>bus path</td>
+<td>s</td>
+<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9&quot;</td>
+</tr>
+<tr>
+<td>frequency (hertz)</td>
+<td>f</td>
+<td>100.0</td>
+</tr>
+<tr>
+<td>amplitude</td>
+<td>f</td>
+<td>1.0</td>
+</tr>
+</tbody></table>
+<h3 id='response-arguments-10'>Response Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>module id</td>
+<td>s</td>
+<td>&quot;e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
+</tr>
+<tr>
+<td>frequency (hertz)</td>
+<td>f</td>
+<td>100.0</td>
+</tr>
+<tr>
+<td>amplitude</td>
+<td>f</td>
+<td>1.0</td>
+</tr>
+</tbody></table>
+<h2 id='edit-triangle-module'>Edit Triangle Module</h2>
+<blockquote>
+<p>To edit an existing triangle module at a given path:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/edit/module/triangle"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"</span><span class="p">,</span> <span class="mi">440</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Response is sent back containing module path and updated parameters::</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"</span><span class="p">,</span> <span class="mi">440</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+</code></pre>
+<p>Adds a new triangle generator module to a given path.</p>
+<h3 id='osc-namespace-11'>OSC Namespace</h3>
+<p><code>/cyperus/edit/module/triangle sff</code></p>
+<h3 id='id-separator-9'>ID Separator</h3>
+<p><code>?</code></p>
+<h3 id='message-arguments-11'>Message Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>module path</td>
+<td>s</td>
+<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
+</tr>
+<tr>
+<td>frequency (hertz)</td>
+<td>f</td>
+<td>440.0</td>
+</tr>
+<tr>
+<td>amplitude</td>
+<td>f</td>
+<td>1.0</td>
+</tr>
+</tbody></table>
+<h3 id='response-arguments-11'>Response Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>module path</td>
+<td>s</td>
+<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
+</tr>
+<tr>
+<td>frequency (hertz)</td>
+<td>f</td>
+<td>440.0</td>
+</tr>
+<tr>
+<td>amplitude</td>
+<td>f</td>
+<td>1.0</td>
+</tr>
+</tbody></table>
 <h2 id='add-delay-module'>Add Delay Module</h2>
 <blockquote>
 <p>To add a new delay module to a given path:</p>
@@ -963,11 +1097,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
 </code></pre>
 <p>Adds a new delay module to a given path.</p>
-<h3 id='osc-namespace-10'>OSC Namespace</h3>
+<h3 id='osc-namespace-12'>OSC Namespace</h3>
 <p><code>/cyperus/add/module/delay sfff</code></p>
-<h3 id='id-separator-8'>ID Separator</h3>
+<h3 id='id-separator-10'>ID Separator</h3>
 <p><code>?</code></p>
-<h3 id='message-arguments-10'>Message Arguments</h3>
+<h3 id='message-arguments-12'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -996,7 +1130,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>0.8</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-10'>Response Arguments</h3>
+<h3 id='response-arguments-12'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1037,11 +1171,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
 </code></pre>
 <p>Edits parameters of a delay module at a given path.</p>
-<h3 id='osc-namespace-11'>OSC Namespace</h3>
+<h3 id='osc-namespace-13'>OSC Namespace</h3>
 <p><code>/cyperus/edit/module/delay sfff</code></p>
-<h3 id='id-separator-9'>ID Separator</h3>
+<h3 id='id-separator-11'>ID Separator</h3>
 <p><code>?</code></p>
-<h3 id='message-arguments-11'>Message Arguments</h3>
+<h3 id='message-arguments-13'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1070,7 +1204,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>0.8</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-11'>Response Arguments</h3>
+<h3 id='response-arguments-13'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1111,11 +1245,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
 </code></pre>
 <p>Adds a new envelope follower module to a given path.</p>
-<h3 id='osc-namespace-12'>OSC Namespace</h3>
+<h3 id='osc-namespace-14'>OSC Namespace</h3>
 <p><code>/cyperus/add/module/envelope follower sfff</code></p>
-<h3 id='id-separator-10'>ID Separator</h3>
+<h3 id='id-separator-12'>ID Separator</h3>
 <p><code>?</code></p>
-<h3 id='message-arguments-12'>Message Arguments</h3>
+<h3 id='message-arguments-14'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1144,7 +1278,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>1.0</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-12'>Response Arguments</h3>
+<h3 id='response-arguments-14'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1185,136 +1319,8 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
 </code></pre>
 <p>Adds a new lowpass module to a given path.</p>
-<h3 id='osc-namespace-13'>OSC Namespace</h3>
-<p><code>/cyperus/add/module/lowpass sff</code></p>
-<h3 id='id-separator-11'>ID Separator</h3>
-<p><code>?</code></p>
-<h3 id='message-arguments-13'>Message Arguments</h3>
-<table><thead>
-<tr>
-<th>Argument</th>
-<th>TypeTag</th>
-<th>Example Data</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>bus path</td>
-<td>s</td>
-<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9&quot;</td>
-</tr>
-<tr>
-<td>amt</td>
-<td>f</td>
-<td>amplitude, range 0/1</td>
-</tr>
-<tr>
-<td>cutoff freq</td>
-<td>f</td>
-<td>440.0</td>
-</tr>
-</tbody></table>
-<h3 id='response-arguments-13'>Response Arguments</h3>
-<table><thead>
-<tr>
-<th>Argument</th>
-<th>TypeTag</th>
-<th>Example Data</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>module id</td>
-<td>s</td>
-<td>&quot;e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
-</tr>
-<tr>
-<td>amt</td>
-<td>f</td>
-<td>amplitude, range 0/1</td>
-</tr>
-<tr>
-<td>cutoff freq</td>
-<td>f</td>
-<td>440.0</td>
-</tr>
-</tbody></table>
-<h2 id='edit-lowpass-module'>Edit Lowpass Module</h2>
-<blockquote>
-<p>To edit parameters of a lowpass module at a given path:</p>
-</blockquote>
-<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/edit/module/lowpass"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">440.0</span><span class="p">)</span>
-</code></pre>
-<blockquote>
-<p>Response is sent back with given path and edited parameters:</p>
-</blockquote>
-<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">440.0</span><span class="p">]</span>
-</code></pre>
-<p>Edits parameters of a lowpass module at a given path.</p>
-<h3 id='osc-namespace-14'>OSC Namespace</h3>
-<p><code>/cyperus/edit/module/lowpass sff</code></p>
-<h3 id='id-separator-12'>ID Separator</h3>
-<p><code>?</code></p>
-<h3 id='message-arguments-14'>Message Arguments</h3>
-<table><thead>
-<tr>
-<th>Argument</th>
-<th>TypeTag</th>
-<th>Example Data</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>module path</td>
-<td>s</td>
-<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
-</tr>
-<tr>
-<td>amt</td>
-<td>f</td>
-<td>amplitude, range 0/1</td>
-</tr>
-<tr>
-<td>cutoff freq</td>
-<td>f</td>
-<td>440.0</td>
-</tr>
-</tbody></table>
-<h3 id='response-arguments-14'>Response Arguments</h3>
-<table><thead>
-<tr>
-<th>Argument</th>
-<th>TypeTag</th>
-<th>Example Data</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>module path</td>
-<td>s</td>
-<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
-</tr>
-<tr>
-<td>amt</td>
-<td>f</td>
-<td>amplitude, range 0/1</td>
-</tr>
-<tr>
-<td>cutoff freq</td>
-<td>f</td>
-<td>440.0</td>
-</tr>
-</tbody></table>
-<h2 id='add-highpass-module'>Add Highpass Module</h2>
-<blockquote>
-<p>To add a new highpass module to a given path:</p>
-</blockquote>
-<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/add/module/highpass"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9"</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">)</span>
-</code></pre>
-<blockquote>
-<p>Response is sent back containing new module id and creation parameters:</p>
-</blockquote>
-<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
-</code></pre>
-<p>Adds a new highpass module to a given path.</p>
 <h3 id='osc-namespace-15'>OSC Namespace</h3>
-<p><code>/cyperus/add/module/highpass sff</code></p>
+<p><code>/cyperus/add/module/lowpass sff</code></p>
 <h3 id='id-separator-13'>ID Separator</h3>
 <p><code>?</code></p>
 <h3 id='message-arguments-15'>Message Arguments</h3>
@@ -1365,20 +1371,20 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>440.0</td>
 </tr>
 </tbody></table>
-<h2 id='edit-highpass-module'>Edit Highpass Module</h2>
+<h2 id='edit-lowpass-module'>Edit Lowpass Module</h2>
 <blockquote>
-<p>To edit parameters of a highpass module at a given path:</p>
+<p>To edit parameters of a lowpass module at a given path:</p>
 </blockquote>
-<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/edit/module/highpass"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">440.0</span><span class="p">)</span>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/edit/module/lowpass"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">440.0</span><span class="p">)</span>
 </code></pre>
 <blockquote>
 <p>Response is sent back with given path and edited parameters:</p>
 </blockquote>
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">440.0</span><span class="p">]</span>
 </code></pre>
-<p>Edits parameters of a highpass module at a given path.</p>
+<p>Edits parameters of a lowpass module at a given path.</p>
 <h3 id='osc-namespace-16'>OSC Namespace</h3>
-<p><code>/cyperus/edit/module/highpass sff</code></p>
+<p><code>/cyperus/edit/module/lowpass sff</code></p>
 <h3 id='id-separator-14'>ID Separator</h3>
 <p><code>?</code></p>
 <h3 id='message-arguments-16'>Message Arguments</h3>
@@ -1429,6 +1435,134 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>440.0</td>
 </tr>
 </tbody></table>
+<h2 id='add-highpass-module'>Add Highpass Module</h2>
+<blockquote>
+<p>To add a new highpass module to a given path:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/add/module/highpass"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9"</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Response is sent back containing new module id and creation parameters:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
+</code></pre>
+<p>Adds a new highpass module to a given path.</p>
+<h3 id='osc-namespace-17'>OSC Namespace</h3>
+<p><code>/cyperus/add/module/highpass sff</code></p>
+<h3 id='id-separator-15'>ID Separator</h3>
+<p><code>?</code></p>
+<h3 id='message-arguments-17'>Message Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>bus path</td>
+<td>s</td>
+<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9&quot;</td>
+</tr>
+<tr>
+<td>amt</td>
+<td>f</td>
+<td>amplitude, range 0/1</td>
+</tr>
+<tr>
+<td>cutoff freq</td>
+<td>f</td>
+<td>440.0</td>
+</tr>
+</tbody></table>
+<h3 id='response-arguments-17'>Response Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>module id</td>
+<td>s</td>
+<td>&quot;e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
+</tr>
+<tr>
+<td>amt</td>
+<td>f</td>
+<td>amplitude, range 0/1</td>
+</tr>
+<tr>
+<td>cutoff freq</td>
+<td>f</td>
+<td>440.0</td>
+</tr>
+</tbody></table>
+<h2 id='edit-highpass-module'>Edit Highpass Module</h2>
+<blockquote>
+<p>To edit parameters of a highpass module at a given path:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="n">liblo</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s">"/cyperus/edit/module/highpass"</span><span class="p">,</span> <span class="s">"/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234"</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">440.0</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Response is sent back with given path and edited parameters:</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">440.0</span><span class="p">]</span>
+</code></pre>
+<p>Edits parameters of a highpass module at a given path.</p>
+<h3 id='osc-namespace-18'>OSC Namespace</h3>
+<p><code>/cyperus/edit/module/highpass sff</code></p>
+<h3 id='id-separator-16'>ID Separator</h3>
+<p><code>?</code></p>
+<h3 id='message-arguments-18'>Message Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>module path</td>
+<td>s</td>
+<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
+</tr>
+<tr>
+<td>amt</td>
+<td>f</td>
+<td>amplitude, range 0/1</td>
+</tr>
+<tr>
+<td>cutoff freq</td>
+<td>f</td>
+<td>440.0</td>
+</tr>
+</tbody></table>
+<h3 id='response-arguments-18'>Response Arguments</h3>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>TypeTag</th>
+<th>Example Data</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>module path</td>
+<td>s</td>
+<td>&quot;/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234&quot;</td>
+</tr>
+<tr>
+<td>amt</td>
+<td>f</td>
+<td>amplitude, range 0/1</td>
+</tr>
+<tr>
+<td>cutoff freq</td>
+<td>f</td>
+<td>440.0</td>
+</tr>
+</tbody></table>
 <h2 id='add-bandpass-module'>Add Bandpass Module</h2>
 <blockquote>
 <p>To add a new highpass module to a given path:</p>
@@ -1441,11 +1575,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
 </code></pre>
 <p>Adds a new bandpass module to a given path.</p>
-<h3 id='osc-namespace-17'>OSC Namespace</h3>
+<h3 id='osc-namespace-19'>OSC Namespace</h3>
 <p><code>/cyperus/add/module/bandpass sfff</code></p>
-<h3 id='id-separator-15'>ID Separator</h3>
+<h3 id='id-separator-17'>ID Separator</h3>
 <p><code>?</code></p>
-<h3 id='message-arguments-17'>Message Arguments</h3>
+<h3 id='message-arguments-19'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1474,7 +1608,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>0.5</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-17'>Response Arguments</h3>
+<h3 id='response-arguments-19'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1515,11 +1649,11 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/a7788829-f087-4631-92fb-6f39d2e67ba9?e5c39cc4-7932-4186-a1be-ecb78fd25234'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">440.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
 </code></pre>
 <p>Edits parameters of a bandpass module at a given path.</p>
-<h3 id='osc-namespace-18'>OSC Namespace</h3>
+<h3 id='osc-namespace-20'>OSC Namespace</h3>
 <p><code>/cyperus/edit/module/bandpass sfff</code></p>
-<h3 id='id-separator-16'>ID Separator</h3>
+<h3 id='id-separator-18'>ID Separator</h3>
 <p><code>?</code></p>
-<h3 id='message-arguments-18'>Message Arguments</h3>
+<h3 id='message-arguments-20'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1548,7 +1682,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>0.2</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-18'>Response Arguments</h3>
+<h3 id='response-arguments-20'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1589,7 +1723,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51:eefd199b-eb1b-41eb-8f9c-381f683a8b91'</span><span class="p">,</span> <span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51?7e8ffe83-6afd-4ad2-bc33-c4ca9c3377d0&lt;7bb05e05-e43f-4f5d-bee3-4400c71e1999'</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 </code></pre>
 <p>Adds a connection between dsp ports and/or dsp bus ports.</p>
-<h3 id='osc-namespace-19'>OSC Namespace</h3>
+<h3 id='osc-namespace-21'>OSC Namespace</h3>
 <p><code>/cyperus/add/connection ss</code></p>
 <h3 id='input-port-id-separator'>Input Port ID Separator</h3>
 <p><code>&lt;</code></p>
@@ -1597,7 +1731,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <p><code>&gt;</code></p>
 <h3 id='bus-port-id-separator'>Bus Port ID Separator</h3>
 <p><code>:</code>  </p>
-<h3 id='message-arguments-19'>Message Arguments</h3>
+<h3 id='message-arguments-21'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1616,7 +1750,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>&quot;/f38e9de7-d26b-4aba-b7e9-bc069e293d51?7e8ffe83-6afd-4ad2-bc33-c4ca9c3377d0&lt;7bb05e05-e43f-4f5d-bee3-4400c71e1999&quot;</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-19'>Response Arguments</h3>
+<h3 id='response-arguments-21'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1652,7 +1786,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51:eefd199b-eb1b-41eb-8f9c-381f683a8b91'</span><span class="p">,</span> <span class="s">'/f38e9de7-d26b-4aba-b7e9-bc069e293d51?7e8ffe83-6afd-4ad2-bc33-c4ca9c3377d0&lt;7bb05e05-e43f-4f5d-bee3-4400c71e1999'</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 </code></pre>
 <p>Removes a connection between dsp ports and/or dsp bus ports.</p>
-<h3 id='osc-namespace-20'>OSC Namespace</h3>
+<h3 id='osc-namespace-22'>OSC Namespace</h3>
 <p><code>/cyperus/remove/connection ss</code></p>
 <h3 id='input-port-id-separator-2'>Input Port ID Separator</h3>
 <p><code>&lt;</code></p>
@@ -1660,7 +1794,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <p><code>&gt;</code></p>
 <h3 id='bus-port-id-separator-2'>Bus Port ID Separator</h3>
 <p><code>:</code>  </p>
-<h3 id='message-arguments-20'>Message Arguments</h3>
+<h3 id='message-arguments-22'>Message Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -1679,7 +1813,7 @@ Each unique object in the Cyperus API posseses a Version 4 UUID separated by a u
 <td>&quot;/f38e9de7-d26b-4aba-b7e9-bc069e293d51?7e8ffe83-6afd-4ad2-bc33-c4ca9c3377d0&lt;7bb05e05-e43f-4f5d-bee3-4400c71e1999&quot;</td>
 </tr>
 </tbody></table>
-<h3 id='response-arguments-20'>Response Arguments</h3>
+<h3 id='response-arguments-22'>Response Arguments</h3>
 <table><thead>
 <tr>
 <th>Argument</th>
